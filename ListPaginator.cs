@@ -4,12 +4,22 @@
 //    Description: A generic class that allows paginating a list
 // =====================================================================================
 
-public class ListPaginator<T>
+public enum PagSize
+    {
+        _5 = 5,
+        _10 = 10,
+        _25 = 25,
+        _50 = 50,
+        _100 = 100,
+        _200 = 200,
+    }
+
+    public class ListPaginator<T>
     {
         List<T> inputList;
-        public int CurrentPageNum = 1;
-        public int LastPageNum = 0;
-        public int PageSize = 0;
+        public int CurrentPageNum { get; private set; } = 1;
+        public int LastPageNum { get; private set; }
+        public int PageSize { get; private set; }
         int start, count;
         public void SetPageSize(PagSize countPerPage)
         {
