@@ -18,25 +18,26 @@ public enum PagSize
     {
         List<T> inputList;
         public int CurrentPageNum { get; private set; } = 1;
-        public int LastPageNum { get; private set; }
+
+        public int LastPageNum => inputList == null || inputList.Count == 0 
+        ? 1 
+        : (int)Math.Ceiling((float)inputList.Count / (float)PageSize);
+        
         public int PageSize { get; private set; }
         int start, count;
         public void SetPageSize(PagSize countPerPage)
         {
             this.PageSize = (int)countPerPage;
-            this.LastPageNum = (int)Math.Ceiling((float)inputList.Count / (float)PageSize);
         }
         public ListPaginator(List<T> inputList, PagSize countPerPage = PagSize._10)
         {
             this.inputList = inputList;
-            this.PageSize = (int)countPerPage;
-            this.LastPageNum = (int)Math.Ceiling( (float)inputList.Count / (float)PageSize );
+            this.PageSize = (int)countPerPage;   
         }
         public ListPaginator(T[] inputArray, PagSize countPerPage = PagSize._10)
         {
             this.inputList = new List<T>(inputArray);
             this.PageSize = (int)countPerPage;
-            this.LastPageNum = (int)Math.Ceiling((float)inputList.Count / (float)PageSize);
         }
 
         public List<T> GetPage(int pageNum)
